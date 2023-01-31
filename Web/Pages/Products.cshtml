@@ -1,0 +1,9 @@
+﻿@page
+@model Web.Pages.ProductsModel
+@{
+	var client = new HttpClient();
+	var uri = new Uri("http://localhost:5001/api/products");
+	var response = await client.GetAsync(uri);
+
+	System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result));
+}

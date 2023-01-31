@@ -19,7 +19,7 @@ namespace Web
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -28,7 +28,7 @@ namespace Web
 
             app.MapRazorPages();
 
-            app.Run();
+            app.Run("http://localhost:5005");
         }
     }
 }

@@ -3,9 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{1D96CB72-6C46-4F62-B0D4-847F7B8354CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{1D96CB72-6C46-4F62-B0D4-847F7B8354CF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A44F4752-0920-4468-AE97-9999FA0FAB46} = {A44F4752-0920-4468-AE97-9999FA0FAB46}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web2", "Web2\Web2.csproj", "{A44F4752-0920-4468-AE97-9999FA0FAB46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "Web2\API.csproj", "{A44F4752-0920-4468-AE97-9999FA0FAB46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
