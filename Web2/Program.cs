@@ -17,6 +17,28 @@ namespace Web2
             builder.Services.AddTransient<DB>();
             builder.Services.AddScoped<MainDB>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("_policy",
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
+
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Häftig API",
+                       
+                });
+            });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,7 +51,7 @@ namespace Web2
             //app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseCors("_policy");
 
             app.MapControllers();
 

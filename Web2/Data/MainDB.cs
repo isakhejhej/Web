@@ -1,5 +1,5 @@
-﻿using Dapper;
-using Web2.Models;
+﻿using API.Models;
+using Dapper;
 
 namespace Web2.Data
 {
