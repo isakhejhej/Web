@@ -34,7 +34,7 @@ namespace Web2
                 {
                     Version = "v1",
                     Title = "Häftig API",
-                       
+                    Description = "beskrivning"
                 });
             });
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using API.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.Swagger.Annotations;
 using System.Diagnostics;
@@ -11,7 +12,7 @@ namespace API.Controllers
     {
         [HttpPost("swishpayment")]
         
-        public string Post()
+        public string Post(SwishCallback swishCallback)
         {
             Debug.WriteLine("GOT SWISH PAYMENT!");
             return "yas";

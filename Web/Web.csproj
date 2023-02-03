@@ -8,11 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Pages\Class.cshtml.cs" />
+    <Compile Remove="Pages\Products.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Pages\Class.cshtml" />
     <Content Remove="Pages\Component.razor" />
+    <Content Remove="Pages\Products.cshtml" />
     <Content Remove="wwwroot\.htaccess" />
     <Content Remove="wwwroot\js\GetProducts - Copy.js" />
   </ItemGroup>

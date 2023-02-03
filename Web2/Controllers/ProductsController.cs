@@ -33,7 +33,7 @@ namespace Web2.Controllers
             return JsonConvert.SerializeObject(sc);
         }
 
-        [HttpGet("product-info/{productId:guid}", Name = "ProductInfo")]
+        [HttpGet("product-info/{productId:guid}")]
         public string ProductInfo(Guid productId)
         {
             SqlConnection con = new SqlConnection(_configuration.GetConnectionString("MainDB").ToString());
