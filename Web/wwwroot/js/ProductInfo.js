@@ -13,7 +13,7 @@ function pageLoaded() {
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8')
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText)
-        productId = response.Id
+        productId = response.id
         showProduct(response)
     }
     xhr.send()
@@ -21,10 +21,11 @@ function pageLoaded() {
 
 function showProduct(response) {
     if (!response.Code) { // 404
-        document.title = response.Name
-        document.getElementById("product-name").innerHTML = response.Name
-        document.getElementById("product-price").innerHTML = response.Price + " SEK"
-        document.getElementById("product-quantity").innerHTML = response.Quantity + " in stock!"
+        console.log(response)
+        document.title = response.name
+        document.getElementById("product-name").innerHTML = response.name
+        document.getElementById("product-price").innerHTML = response.price + " SEK"
+        document.getElementById("product-quantity").innerHTML = response.quantity + " in stock!"
         document.getElementById("add-to-cart").onclick = addProductToCart;
     }
     else {
@@ -37,9 +38,14 @@ function addProductToCart() {
     const xhr = new XMLHttpRequest()
     xhr.open('POST', 'http://localhost:5001/api/add-to-cart/' + productId, true)
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8')
-    xhr.send(JSON.stringify({ "quantity": 5 }))
+    xhr.send(JSON.stringify({ "quantity": 1 }))
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText)
-        console.log(response)
+        if (response) {
+            if (response.Code == 200) {
+                document.getElementById("cart-result").innerHTML = "Added to cart"
+                window.location.reload()
+            }
+        }
     }
 }

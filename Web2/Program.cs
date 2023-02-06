@@ -1,3 +1,4 @@
+using System.Net;
 using Web2.Data;
 
 namespace Web2
@@ -41,12 +42,8 @@ namespace Web2
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             //app.UseHttpsRedirection();
 
@@ -55,7 +52,14 @@ namespace Web2
 
             app.MapControllers();
 
-            app.Run("http://localhost:5001");
+            if (app.Environment.IsDevelopment())
+            {
+                app.Run("http://127.0.0.1:5001");
+            }
+            else
+            {
+                app.Run("http://185.189.51.86:5001");
+            }
 
 		}
     }

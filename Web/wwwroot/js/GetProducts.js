@@ -9,10 +9,10 @@ xhr.send()
 
 function showProducts(response) {
     for (i = 0; i < response.length; i++) {
-        document.write(response[i].Name)
+        document.write(response[i].name)
         document.write("<br>")
         document.write("<div>")
-        document.write("<button onclick=goToPage('" + response[i].Id + "')>View </button>")
+        document.write("<button onclick=goToPage('" + response[i].id + "')>View </button>")
         document.write("</div>")
     }
 }
