@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <meta charset="utf-8" />
-    <title>Products</title>
+    <title>Checkout</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-dark">
@@ -24,17 +24,23 @@
             </div>
         </div>
     </nav>
-    <h1 class="text-center">Products</h1>
+    <h1 class="text-center">Checkout</h1>
     <div>
         <table class="table text-center">
             <tr>
                 <th>Name</th>
-                <th>Action</th>
+                <th>Price</th>
+                <th>Quantity</th>
             </tr>
             <tbody id="products">
             </tbody>
         </table>
     </div>
-    <script src="js/GetProducts.js"></script>
+    <h1 id="loading" class="text-center">Loading...</h1>
+    <p id="total-price" class="text-center pt-5"></p>
+    <div class="d-flex align-items-center justify-content-center">
+        <button id="checkout-button" class="btn btn-success"><i class="bi-handbag"></i> Checkout</button>
+    </div>
+    <script src="js/Checkout.js"></script>
 </body>
 </html>

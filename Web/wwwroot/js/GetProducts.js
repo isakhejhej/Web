@@ -9,14 +9,14 @@ xhr.send()
 
 function showProducts(response) {
     for (i = 0; i < response.length; i++) {
-        document.write(response[i].name)
-        document.write("<br>")
-        document.write("<div>")
-        document.write("<button onclick=goToPage('" + response[i].id + "')>View </button>")
-        document.write("</div>")
+        document.getElementById("products").insertAdjacentHTML('beforebegin', '<tr>' +
+            '<td>' + response[i].name + '</td>' +
+            '<td><button id="' + response[i].id + '" class="btn btn-success">View</button></td > ' +
+            '</tr>')
+        viewButton(response[i].id)
     }
 }
 
-function goToPage(id) {
-    window.location.href = "http://localhost:5005/product-page.html?id=" + id
+function viewButton(id) {
+    document.getElementById(id).onclick = function () { window.location.href = "/product-page.html?id=" + id }
 }

@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using API.Models;
 using System.Net.Http;
+using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace Web2.Controllers
 {
@@ -16,6 +18,7 @@ namespace Web2.Controllers
     {
 
         public readonly IConfiguration _configuration;
+        public SqlConnection con => new SqlConnection(_configuration.GetConnectionString("MainDB").ToString());
         public ProductsController(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -48,6 +51,78 @@ namespace Web2.Controllers
                 Message = "Added product to cart, quantity " + addToCart.Quantity
             };
             return JsonConvert.SerializeObject(sc);
+        }
+
+        [HttpPost("new-order")]
+        public string NewOrder()
+        {
+            Guid userId = Guid.Parse("f60e7c57-d272-45c0-aaec-ca8a6020b471");
+            string query = "BEGIN " +
+                "IF NOT EXISTS (SELECT * FROM dbo.Orders WHERE UserId = '" + userId + "' AND Paid = 0) " +
+                "BEGIN " +
+                "INSERT INTO dbo.Orders (UserId, Created) VALUES ('" + userId + "', '" + DateTime.Now + "') SELECT SCOPE_IDENTITY() AS OrderId " +
+                "END " +
+                "END";
+            SqlConnection con = new SqlConnection(_configuration.GetConnectionString("MainDB").ToString());
+            SqlDataAdapter da = new SqlDataAdapter(query, con);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            if(dt.Rows.Count > 0)
+            {
+                Dictionary<string, int> orderReturn = new Dictionary<string, int>();
+                orderReturn.Add("orderId", Convert.ToInt32(dt.Rows[0]["OrderId"]));
+                return JsonConvert.SerializeObject(orderReturn);
+            } 
+            else
+            {
+                StatusCode sc = new StatusCode
+                {
+                    Code = 404,
+                    Message = "Already has order"
+                };
+                return JsonConvert.SerializeObject(sc);
+            }
+        }
+
+        [HttpGet("order-status-old")]
+        public string OrderStatus()
+        {
+            Guid userId = Guid.Parse("f60e7c57-d272-45c0-aaec-ca8a6020b471");
+            string query = "SELECT * FROM dbo.Orders WHERE UserId = '" + userId + "' AND Paid = '" + 0 + "' OR Paid = '" + 1 +"'";
+            SqlConnection con = new SqlConnection(_configuration.GetConnectionString("MainDB").ToString());
+            SqlDataAdapter da = new SqlDataAdapter(query, con);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            if(dt.Rows.Count > 0)
+            {
+                OrderStatus orderStatus = new OrderStatus
+                {
+                    Id = (Guid)dt.Rows[0]["Id"],
+                    OrderId = (int)dt.Rows[0]["OrderId"],
+                    Created = (DateTime)dt.Rows[0]["Created"],
+                    Paid = (Byte)dt.Rows[0]["Paid"]
+                };
+                return JsonConvert.SerializeObject(orderStatus);
+            }
+            else
+            {
+                StatusCode sc = new StatusCode
+                {
+                    Code = 404,
+                    Message = "Order status not found"
+                };
+                return JsonConvert.SerializeObject(sc);
+            }
+        }
+
+        [HttpGet("order-status")]
+        public async Task<OrderStatus> OrderStatus2()
+        {
+            Guid userId = Guid.Parse("f60e7c57-d272-45c0-aaec-ca8a6020b471");
+            string query = @"SELECT * FROM dbo.Orders WHERE UserId=@userId AND Paid = '0' OR Paid = '1'";
+            return await con.QuerySingleAsync<OrderStatus>(query, new {userId});
         }
 
         [HttpGet("order")]
@@ -96,7 +171,7 @@ namespace Web2.Controllers
             }
         }
 
-        [HttpGet("product-info/{productId:guid}")]
+        [HttpGet("product-info-old/{productId:guid}")]
         public string ProductInfo(Guid productId)
         {
             SqlConnection con = new SqlConnection(_configuration.GetConnectionString("MainDB").ToString());
@@ -126,7 +201,22 @@ namespace Web2.Controllers
             }
         }
 
+        [HttpGet("product-info/{productId:guid}")]
+        public async Task<Product> ProductInfo2(Guid productId)
+        {
+            string query = @"SELECT * FROM dbo.Products WHERE Id=@productId";
+            return await con.QuerySingleAsync<Product>(query, new {productId});
+        }
+
         [HttpGet("products")]
+        public async Task<IEnumerable<Product>> Products2()
+        {
+            Guid userId = Guid.Parse("f60e7c57-d272-45c0-aaec-ca8a6020b471");
+            string query = @"SELECT * FROM dbo.Products";
+            return await con.QueryAsync<Product>(query);
+        }
+
+        [HttpGet("products-old")]
         public string Products()
         {
             SqlConnection con = new SqlConnection(_configuration.GetConnectionString("MainDB").ToString());

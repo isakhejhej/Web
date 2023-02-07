@@ -20,7 +20,7 @@ function pageLoaded() {
 }
 
 function showProduct(response) {
-    if (!response.Code) { // 404
+    if (!response.code) { // 404
         console.log(response)
         document.title = response.name
         document.getElementById("product-name").innerHTML = response.name
@@ -34,18 +34,18 @@ function showProduct(response) {
 }
 
 function addProductToCart() {
-    console.log("CLICK")
     const xhr = new XMLHttpRequest()
     xhr.open('POST', 'http://localhost:5001/api/add-to-cart/' + productId, true)
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8')
-    xhr.send(JSON.stringify({ "quantity": 1 }))
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText)
+        console.log(response)
         if (response) {
-            if (response.Code == 200) {
+            if (response.code == 200) {
                 document.getElementById("cart-result").innerHTML = "Added to cart"
                 window.location.reload()
             }
         }
     }
+    xhr.send(JSON.stringify({ "quantity": 1 }))
 }

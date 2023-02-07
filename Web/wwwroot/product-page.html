@@ -2,14 +2,35 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <title>Hi</title>
 </head>
 <body>
-    <h1 id="product-name"></h1>
-    <h3 id="product-price"></h3>
-    <h3 id="product-quantity"></h3>
-    <button id="add-to-cart">Add to cart</button>
-    <h3 id="cart-result"></h3>
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/products.html">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/checkout.html">Checkout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/order.html">Your Order</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="d-flex flex-column align-items-center">
+        <h1 id="product-name"></h1>
+        <h3 id="product-price"></h3>
+        <h3 id="product-quantity"></h3>
+        <button id="add-to-cart" class="btn btn-success"><i class="bi-handbag"></i> Add to cart</button>
+        <h3 id="cart-result"></h3>
+    </div>
     <script src="js/ProductInfo.js"></script>
 </body>
 </html>
