@@ -9,7 +9,7 @@ function pageLoaded() {
     const urlParams = new URLSearchParams(window.location.search)
     const id = urlParams.get('id') || "00000000-0000-0000-0000-000000000000"
     const xhr = new XMLHttpRequest()
-    xhr.open('GET', 'http://localhost:5001/api/product-info/' + id, true)
+    xhr.open('GET', 'https://woizservice.xyz/api/api/product-info/' + id, true)
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8')
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText)
@@ -35,7 +35,7 @@ function showProduct(response) {
 
 function addProductToCart() {
     const xhr = new XMLHttpRequest()
-    xhr.open('POST', 'http://localhost:5001/api/add-to-cart/' + productId, true)
+    xhr.open('POST', 'https://woizservice.xyz/api/api/add-to-cart/' + productId, true)
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8')
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText)

@@ -85,38 +85,6 @@ namespace Web2.Controllers
             }
         }
 
-        [HttpGet("order-status-old")]
-        public string OrderStatus()
-        {
-            Guid userId = Guid.Parse("f60e7c57-d272-45c0-aaec-ca8a6020b471");
-            string query = "SELECT * FROM dbo.Orders WHERE UserId = '" + userId + "' AND Paid = '" + 0 + "' OR Paid = '" + 1 +"'";
-            SqlConnection con = new SqlConnection(_configuration.GetConnectionString("MainDB").ToString());
-            SqlDataAdapter da = new SqlDataAdapter(query, con);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-
-            if(dt.Rows.Count > 0)
-            {
-                OrderStatus orderStatus = new OrderStatus
-                {
-                    Id = (Guid)dt.Rows[0]["Id"],
-                    OrderId = (int)dt.Rows[0]["OrderId"],
-                    Created = (DateTime)dt.Rows[0]["Created"],
-                    Paid = (Byte)dt.Rows[0]["Paid"]
-                };
-                return JsonConvert.SerializeObject(orderStatus);
-            }
-            else
-            {
-                StatusCode sc = new StatusCode
-                {
-                    Code = 404,
-                    Message = "Order status not found"
-                };
-                return JsonConvert.SerializeObject(sc);
-            }
-        }
-
         [HttpGet("order-status")]
         public async Task<OrderStatus> OrderStatus2()
         {
@@ -124,6 +92,18 @@ namespace Web2.Controllers
             string query = @"SELECT * FROM dbo.Orders WHERE UserId=@userId AND Paid = '0' OR Paid = '1'";
             return await con.QuerySingleAsync<OrderStatus>(query, new {userId});
         }
+
+        //[HttpGet("order")]
+        //public async Task<IEnumerable<CurrentOrder>> Order2()
+        //{
+        //    Guid userId = Guid.Parse("f60e7c57-d272-45c0-aaec-ca8a6020b471");
+        //    string query = @"SELECT dbo.CartProducts.Id, dbo.Products.Name, dbo.CartProducts.Quantity, dbo.Products.Price * dbo.CartProducts.Quantity AS Price FROM dbo.CartProducts " +
+        //        "INNER JOIN dbo.Products " +
+        //        "ON dbo.CartProducts.ProductId = dbo.Products.Id " +
+        //        "WHERE UserId = '" + userId + "'";
+        //    string query2 = @"SELECT SUM(dbo.CartProducts.Quantity * dbo.Products.Price) AS TotalPrice FROM dbo.CartProducts JOIN dbo.Products ON dbo.CartProducts.ProductId = dbo.Products.Id";
+        //    var products = await con.QueryAsync<CurrentOrder>(query, new { userId });
+        //}
 
         [HttpGet("order")]
         public string Order()
@@ -148,13 +128,14 @@ namespace Web2.Controllers
 
                     OrderProduct orderProduct = new OrderProduct
                     {
-                        Id = (Guid)dt.Rows[i]["Id"],
+                         Id = (Guid)dt.Rows[i]["Id"],
                         Name = (string)dt.Rows[i]["Name"],
                         Price = Convert.ToInt32(dt.Rows[i]["Price"]),
                         Quantity = Convert.ToInt32(dt.Rows[i]["Quantity"])
                     };
                     totalPrice += orderProduct.Price;
                     orderList.Add(orderProduct);
+                    
                 }
                 data.Add("order", orderList);
                 data.Add("totalPrice", totalPrice);
@@ -171,38 +152,8 @@ namespace Web2.Controllers
             }
         }
 
-        [HttpGet("product-info-old/{productId:guid}")]
-        public string ProductInfo(Guid productId)
-        {
-            SqlConnection con = new SqlConnection(_configuration.GetConnectionString("MainDB").ToString());
-            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM dbo.Products WHERE Id = '"+ productId + "'", con);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-
-            if (dt.Rows.Count > 0)
-            {
-                Product product = new Product
-                {
-                    Id = productId,
-                    Name = dt.Rows[0]["Name"].ToString(),
-                    Price = (int)dt.Rows[0]["Price"],
-                    Quantity = (int)dt.Rows[0]["Quantity"]
-                };
-               return JsonConvert.SerializeObject(product);
-            } 
-            else
-            {
-                StatusCode sc = new StatusCode
-                {
-                    Code = 404,
-                    Message = "Product not found"
-                };
-                return JsonConvert.SerializeObject(sc);
-            }
-        }
-
         [HttpGet("product-info/{productId:guid}")]
-        public async Task<Product> ProductInfo2(Guid productId)
+        public async Task<Product> ProductInfo(Guid productId)
         {
             string query = @"SELECT * FROM dbo.Products WHERE Id=@productId";
             return await con.QuerySingleAsync<Product>(query, new {productId});
@@ -216,39 +167,5 @@ namespace Web2.Controllers
             return await con.QueryAsync<Product>(query);
         }
 
-        [HttpGet("products-old")]
-        public string Products()
-        {
-            SqlConnection con = new SqlConnection(_configuration.GetConnectionString("MainDB").ToString());
-            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM dbo.Products", con);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-
-            List<Product> productList = new List<Product>();
-            if(dt.Rows.Count > 0)
-            {
-                for(int i = 0; i < dt.Rows.Count; i++)
-                {
-                    Product product = new Product();
-
-                    product.Id = (Guid)dt.Rows[i]["Id"];
-                    product.Name = (string)dt.Rows[i]["Name"];
-                    product.Price = Convert.ToInt32(dt.Rows[i]["Price"]);
-                    product.Quantity = Convert.ToInt32(dt.Rows[i]["Quantity"]);
-
-                    productList.Add(product);
-                }
-                return JsonConvert.SerializeObject(productList);
-            }
-            else
-            {
-                StatusCode sc = new StatusCode
-                {
-                    Code = 404,
-                    Message = "Something went wrong"
-                };
-                return JsonConvert.SerializeObject(sc);
-            }
-        }
     }
 }

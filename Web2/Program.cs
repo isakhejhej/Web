@@ -50,6 +50,8 @@ namespace Web2
             app.UseAuthorization();
             app.UseCors("_policy");
 
+            app.UseDeveloperExceptionPage();
+
             app.MapControllers();
 
             if (app.Environment.IsDevelopment())
@@ -58,7 +60,7 @@ namespace Web2
             }
             else
             {
-                app.Run("http://185.189.51.86:5001");
+                app.Run();
             }
 
 		}

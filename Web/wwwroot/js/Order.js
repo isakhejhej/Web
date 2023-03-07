@@ -1,6 +1,6 @@
 ﻿function getOrderStatus() {
     const xhr = new XMLHttpRequest()
-    xhr.open('GET', 'http://localhost:5001/api/order-status', true)
+    xhr.open('GET', 'https://woizservice.xyz/api/api/order-status', true)
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8')
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText)
@@ -12,7 +12,7 @@
 
 function getOrderItems() {
     const xhr = new XMLHttpRequest()
-    xhr.open('GET', 'http://localhost:5001/api/order', true)
+    xhr.open('GET', 'https://woizservice.xyz/api/api/order', true)
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8')
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText)

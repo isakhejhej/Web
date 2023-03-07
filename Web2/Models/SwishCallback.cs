@@ -1,20 +1,43 @@
-﻿namespace API.Models
+﻿using Newtonsoft.Json;
+
+namespace API.Models
 {
     public class SwishCallback
     {
+        [JsonProperty("id")]
         public string Id { get; set; }
-        public string payeePaymentReference { get; set; }
-        public string paymentReference { get; set; }
-        public string callbackUrl { get; set; }
-        public string payerAlias { get; set; }
-        public string payeeAlias { get; set; }
-        public string amount { get; set; }
-        public string currency { get; set; }
-        public string message { get; set; }
-        public string status { get; set; }
-        public string dateCreated { get; set; }
-        public string datePaid { get; set; }
-        public string errorCode { get; set; }
-        public string errorMessage { get; set; }
+
+        //[JsonProperty("payeePaymentReference")]
+        //public string PayeePaymentReference { get; set; }
+
+        //[JsonProperty("paymentReference")]
+        //public string PaymentReference { get; set; }
+
+        //[JsonProperty("callbackUrl")]
+        //public string CallbackUrl { get; set; }
+
+        //[JsonProperty("payerAlias")]
+        //public string PayerAlias { get; set; }
+
+        //[JsonProperty("payeeAlias")]
+        //public string PayeeAlias { get; set; }
+
+        //[JsonProperty("amount")]
+        //public double Amount { get; set; }
+
+        //[JsonProperty("currency")]
+        //public string Currency { get; set; }
+
+        //[JsonProperty("message")]
+        //public string Message { get; set; }
+
+        [JsonProperty("status")]
+        public string Status { get; set; }
+
+        //[JsonProperty("dateCreated")]
+        //public DateTime DateCreated { get; set; }
+
+        //[JsonProperty("datePaid")]
+        //public DateTime DatePaid { get; set; }
     }
 }

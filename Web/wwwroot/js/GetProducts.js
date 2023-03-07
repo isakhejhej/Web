@@ -1,5 +1,5 @@
 ﻿const xhr = new XMLHttpRequest()
-xhr.open('GET', 'http://localhost:5001/api/products', true)
+xhr.open('GET', 'https://woizservice.xyz/api/api/products', true)
 xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8')
 xhr.onload = function () {
     var response = JSON.parse(xhr.responseText)

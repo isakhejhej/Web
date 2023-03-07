@@ -1,6 +1,6 @@
 ﻿function getOrderItems() {
     const xhr = new XMLHttpRequest()
-    xhr.open('GET', 'http://localhost:5001/api/order', true)
+    xhr.open('GET', 'https://woizservice.xyz/api/api/order', true)
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8')
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText)
@@ -42,7 +42,7 @@ function proceedCheckout() {
 
 function createNewOrder() {
     const xhr = new XMLHttpRequest()
-    xhr.open('POST', 'http://localhost:5001/api/new-order', true)
+    xhr.open('POST', 'https://woizservice.xyz/api/api/new-order', true)
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8')
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText)
@@ -58,7 +58,7 @@ function createNewOrder() {
 
 function alreadyHasOrderRedirect() {
     const xhr = new XMLHttpRequest()
-    xhr.open('GET', 'http://localhost:5001/api/order-status', true)
+    xhr.open('GET', 'https://woizservice.xyz/api/api/order-status', true)
     xhr.setRequestHeader('Content-Type', 'application/json, charset=UTF-8')
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText)

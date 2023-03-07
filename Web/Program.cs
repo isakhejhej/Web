@@ -28,7 +28,15 @@ namespace Web
 
             app.MapRazorPages();
 
-            app.Run("http://localhost:5005");
+            if (app.Environment.IsDevelopment())
+            {
+                app.Run("http://localhost:5005");
+            }
+            else
+            {
+                app.Run();
+            }
+              
         }
     }
 }
